@@ -3,6 +3,7 @@ reference/
 openspec/
 docs/
 .iflow/
+hosts-backup/
 
 # Python
 *.pyc
