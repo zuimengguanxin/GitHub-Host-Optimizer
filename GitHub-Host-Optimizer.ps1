@@ -313,73 +313,21 @@ function Update-BackupPool {
 # ============================================================
 # DNS API functions
 # ============================================================
-function Get-IPFromIpApi {
+function Get-IPFromTutorialspoint {
     param(
         [Parameter(Mandatory=$true)]
         [string]$Domain
     )
 
     try {
-        $url = "https://ip-api.com/json/" + $Domain + "?fields=query,status,message"
+        $url = "https://tools.tutorialspoint.com/ip_lookup_ajax.php?host=" + $Domain
         $response = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 10
-        $json = $response.Content | ConvertFrom-Json
+        $content = $response.Content
 
-        if ($json.status -eq "success") {
-            return @($json.query)
+        # 解析 HTML: <div id='divString0'>IP address of github.com is 140.82.121.3</div>
+        if ($content -match "IP address of .+? is (\d+\.\d+\.\d+\.\d+)") {
+            return @($matches[1])
         }
-    } catch {}
-
-    return @()
-}
-
-function Get-IPFromDnsGoogle {
-    param(
-        [Parameter(Mandatory=$true)]
-        [string]$Domain
-    )
-
-    try {
-        $query = "name=" + $Domain + "%26type=A"
-        $url = "https://dns.google/resolve?" + $query
-        $response = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 10
-        $json = $response.Content | ConvertFrom-Json
-
-        $ips = @()
-        if ($json.Answer) {
-            foreach ($answer in $json.Answer) {
-                if ($answer.type -eq 1) {
-                    $ips += $answer.data
-                }
-            }
-        }
-        return $ips
-    } catch {}
-
-    return @()
-}
-
-function Get-IPFromDnsCloudflare {
-    param(
-        [Parameter(Mandatory=$true)]
-        [string]$Domain
-    )
-
-    try {
-        $query = "name=" + $Domain + "%26type=A"
-        $url = "https://cloudflare-dns.com/dns-query?" + $query
-        $headers = @{"accept" = "application/dns-json"}
-        $response = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 10 -Headers $headers
-        $json = $response.Content | ConvertFrom-Json
-
-        $ips = @()
-        if ($json.Answer) {
-            foreach ($answer in $json.Answer) {
-                if ($answer.type -eq 1) {
-                    $ips += $answer.data
-                }
-            }
-        }
-        return $ips
     } catch {}
 
     return @()
@@ -393,14 +341,9 @@ function Get-IPsFromMultipleSources {
 
     $allIPs = @()
 
-    $ipApiResult = Get-IPFromIpApi -Domain $Domain
-    $allIPs += $ipApiResult
-
-    $dnsGoogleResult = Get-IPFromDnsGoogle -Domain $Domain
-    $allIPs += $dnsGoogleResult
-
-    $dnsCloudflareResult = Get-IPFromDnsCloudflare -Domain $Domain
-    $allIPs += $dnsCloudflareResult
+    # 使用 tutorialspoint API
+    $tutorialspointResult = Get-IPFromTutorialspoint -Domain $Domain
+    $allIPs += $tutorialspointResult
 
     return @($allIPs | Select-Object -Unique)
 }
