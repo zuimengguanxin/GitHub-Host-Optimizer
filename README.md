@@ -81,7 +81,6 @@ cd GitHub-Host-Optimizer
     "https://gitee.com/if-the-wind/github-hosts/raw/main/hosts",
     "https://hosts.gitcdn.top/hosts.txt"
   ],
-  "thirdPartyDnsApis": [],                         // 第三方 DNS API（可选）
   "testTimeoutMs": 1000,                           // 测速超时时间（毫秒）
   "retryCount": 2,                                 // 主 IP 测速重试次数
   "remoteSourceRetryCount": 2,                     // 远程备用源重试次数
@@ -100,17 +99,6 @@ cd GitHub-Host-Optimizer
   "https://raw.githubusercontent.com/521xueweihan/GitHub520/main/hosts",
   "https://gitee.com/if-the-wind/github-hosts/raw/main/hosts",
   "https://hosts.gitcdn.top/hosts.txt"
-]
-```
-
-### 添加第三方 DNS API（可选）
-
-在 `thirdPartyDnsApis` 中添加支持 `{domain}` 占位符的 DNS 查询接口：
-
-```json
-"thirdPartyDnsApis": [
-  "https://cloudflare-dns.com/dns-query?name={domain}&type=A",
-  "https://dns.google/resolve?name={domain}&type=A"
 ]
 ```
 
