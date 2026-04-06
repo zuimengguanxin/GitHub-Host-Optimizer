@@ -6,11 +6,10 @@
     "https://raw.hellogithub.com/hosts",
     "https://raw.githubusercontent.com/maxiaof/github-hosts/refs/heads/master/hosts",
     "https://gitee.com/if-the-wind/github-hosts/raw/main/hosts",
-    "https://hosts.gitcdn.top/hosts.txt",
-    "https://github-hosts.tinsfox.com/hosts"
+    "https://hosts.gitcdn.top/hosts.txt"
   ],
   "testTimeoutMs": 1000,
-  "retryCount": 1,
+  "retryCount": 2,
   "remoteSourceRetryCount": 2,
   "apiRetryCount": 3,
   "autoBackup": true
