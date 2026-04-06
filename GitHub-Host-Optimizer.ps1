@@ -651,21 +651,12 @@ function Invoke-MainProcess {
     
     $hasAdmin = Test-AdminPrivilege
     
-    if (-not $hasAdmin) {
-        Write-Host ""
-        Write-Host "  [i] Requesting admin privilege..." -ForegroundColor Yellow
-        
-        $scriptPath = $MyInvocation.ScriptName
-        if (-not $scriptPath) { $scriptPath = $PSCommandPath }
-        
-        $elevated = Request-AdminPrivilege -ScriptPath $scriptPath
-        
-        if ($elevated) { return }
-        
-        Write-Host "  [!] Admin denied, running in user mode" -ForegroundColor Yellow
-        Write-Host "  [i] Only my-github-hosts.txt will be updated" -ForegroundColor DarkGray
-    } else {
+    if ($hasAdmin) {
         Write-Host "  [+] Admin privilege acquired" -ForegroundColor Green
+    } else {
+        Write-Host "  [!] Running in user mode" -ForegroundColor Yellow
+        Write-Host "  [i] System hosts will not be updated" -ForegroundColor DarkGray
+        Write-Host "  [i] Run as admin to update system hosts" -ForegroundColor DarkGray
     }
     
     $config = Get-Config
