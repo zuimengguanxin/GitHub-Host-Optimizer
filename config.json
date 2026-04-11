@@ -6,7 +6,8 @@
     "https://raw.hellogithub.com/hosts",
     "https://raw.githubusercontent.com/maxiaof/github-hosts/refs/heads/master/hosts",
     "https://gitee.com/if-the-wind/github-hosts/raw/main/hosts",
-    "https://hosts.gitcdn.top/hosts.txt"
+    "https://hosts.gitcdn.top/hosts.txt",
+    "https://hk.gh-proxy.org/https://raw.githubusercontent.com/ineo6/hosts/master/hosts"
   ],
   "testTimeoutMs": 1000,
   "retryCount": 2,

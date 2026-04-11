@@ -18,3 +18,7 @@ __pycache__/
 # 备份文件
 *.bak
 *.backup
+
+
+backup-pool.json
+my-github-hosts.txt
